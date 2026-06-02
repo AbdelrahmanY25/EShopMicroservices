@@ -1,9 +1,18 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddCarter();
 
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+var assemply = typeof(Program).Assembly;
+
+builder.Services.AddMediatR(cfg => 
+{
+	cfg.RegisterServicesFromAssembly(assemply);
+	cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+});
+
+builder.Services.AddValidatorsFromAssembly(assemply);
+
+builder.Services.AddCarter();
 
 builder.Services.AddMarten(options => {
 	options.Connection(builder.Configuration.GetConnectionString("Database")!);
