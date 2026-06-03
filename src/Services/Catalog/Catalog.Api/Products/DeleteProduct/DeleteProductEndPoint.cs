@@ -1,4 +1,4 @@
-﻿namespace Catalog.Api.Products.DeleteProduct;
+namespace Catalog.Api.Products.DeleteProduct;
 
 public record DeleteProductResponse(bool IsSuccess);
 
@@ -9,8 +9,11 @@ public class DeleteProductEndPoint : ICarterModule
 		app.MapDelete("/products/{id:guid}", async (Guid id, ISender sender) =>
 		{
 			var result = await sender.Send(new DeleteProductCommand(id));
-			
-			var response = result.Adapt<DeleteProductResponse>();
+
+			if (result.IsFailure)
+				return (IResult)result.ToProblem();
+
+			var response = result.Value.Adapt<DeleteProductResponse>();
 
 			return Results.Ok(response);
 		})

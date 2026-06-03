@@ -1,5 +1,5 @@
-﻿namespace BuildingBlocks.CQRS;
+namespace BuildingBlocks.CQRS;
 
-public interface IQuery<out TResult> : IRequest<TResult> where TResult : notnull
+public interface IQuery<TResult> : IRequest<Result<TResult>> where TResult : notnull
 {
 }

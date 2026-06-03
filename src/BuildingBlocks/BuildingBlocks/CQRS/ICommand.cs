@@ -1,9 +1,9 @@
-﻿namespace BuildingBlocks.CQRS;
+namespace BuildingBlocks.CQRS;
 
-public interface ICommand : IRequest<Unit>
+public interface ICommand : IRequest<Result>
 {
 }
 
-public interface ICommand<out TResult> : IRequest<TResult>
+public interface ICommand<TResult> : IRequest<Result<TResult>>
 {
 }

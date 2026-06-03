@@ -1,10 +1,12 @@
-﻿global using BuildingBlocks.Behaviors;
+global using BuildingBlocks.Abstractions;
+global using BuildingBlocks.Behaviors;
 global using BuildingBlocks.CQRS;
+global using BuildingBlocks.Extensions;
 
 
 
+global using Catalog.Api.Errors;
 global using Catalog.Api.Models;
-global using Catalog.Api.Exceptions;
 
 
 

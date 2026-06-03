@@ -1,4 +1,4 @@
-﻿namespace Catalog.Api.Products.GetProductById;
+namespace Catalog.Api.Products.GetProductById;
 
 public record GetProductByIdResponse(Product Product);
 
@@ -10,7 +10,10 @@ public class GetProductByIdEndPoint() : ICarterModule
 		{
 			var result = await sender.Send(new GetProductByIdQuery(id));
 
-			var response = result.Adapt<GetProductByIdResponse>();
+			if (result.IsFailure)
+				return (IResult)result.ToProblem();
+
+			var response = result.Value.Adapt<GetProductByIdResponse>();
 
 			return Results.Ok(response);
 		})

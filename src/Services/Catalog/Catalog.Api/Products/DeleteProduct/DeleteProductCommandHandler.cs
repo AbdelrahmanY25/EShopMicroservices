@@ -1,4 +1,4 @@
-﻿namespace Catalog.Api.Products.DeleteProduct;
+namespace Catalog.Api.Products.DeleteProduct;
 
 public record DeleteProductCommand(Guid Id) : ICommand<DeleteProductResult>;
 
@@ -14,15 +14,17 @@ public class DeleteProductCommandValidator : AbstractValidator<DeleteProductComm
 
 public class DeleteProductCommandHandler(IDocumentSession session) : ICommandHandler<DeleteProductCommand, DeleteProductResult>
 {
-	public async Task<DeleteProductResult> Handle(DeleteProductCommand command, CancellationToken cancellationToken)
+	public async Task<Result<DeleteProductResult>> Handle(DeleteProductCommand command, CancellationToken cancellationToken)
 	{
-		var product = await session.LoadAsync<Product>(command.Id, cancellationToken) ??
-			throw new ProductNotFoundException($"Product with id {command.Id} not found.");
+		var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
+
+		if (product is null)
+			return Result.Failure<DeleteProductResult>(ProductErrors.ProductNotFound);
 
 		session.Delete(product);
 
 		await session.SaveChangesAsync(cancellationToken);
 
-		return new DeleteProductResult(true);
+		return Result.Success(new DeleteProductResult(true));
 	}
 }

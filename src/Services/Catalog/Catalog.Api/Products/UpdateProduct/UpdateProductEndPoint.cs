@@ -1,4 +1,4 @@
-﻿namespace Catalog.Api.Products.UpdateProduct;
+namespace Catalog.Api.Products.UpdateProduct;
 
 public record UpdateProductRequest(Guid Id, string Name, string Description, decimal Price, List<string> Category, string ImageFile);
 
@@ -14,7 +14,10 @@ public class UpdateProductEndPoint : ICarterModule
 			
 			var result = await sender.Send(command);
 
-			var response = result.Adapt<UpdateProductResponse>();
+			if (result.IsFailure)
+				return (IResult)result.ToProblem();
+
+			var response = result.Value.Adapt<UpdateProductResponse>();
 			
 			return Results.Ok(response);
 		})

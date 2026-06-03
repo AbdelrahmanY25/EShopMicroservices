@@ -1,4 +1,4 @@
-﻿namespace Catalog.Api.Products.GetProducts;
+namespace Catalog.Api.Products.GetProducts;
 
 public record GetProductResponse(IEnumerable<Product> Products);
 
@@ -10,7 +10,10 @@ public class GetProductsEndPoint : ICarterModule
 		{
 			var result = await sender.Send(new GetProductsQuery());
 
-			var response = result.Adapt<GetProductResponse>();
+			if (result.IsFailure)
+				return (IResult)result.ToProblem();
+
+			var response = result.Value.Adapt<GetProductResponse>();
 
 			return Results.Ok(response);
 		})
