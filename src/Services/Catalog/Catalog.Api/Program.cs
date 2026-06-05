@@ -1,4 +1,5 @@
 using BuildingBlocks.Exceptions;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,10 @@ builder.Services.AddMediatR(cfg =>
 
 builder.Services.AddValidatorsFromAssembly(assemply);
 
+builder.Host.UseSerilog((context, configuration) =>
+	configuration.ReadFrom.Configuration(context.Configuration)
+);
+
 builder.Services.AddCarter();
 
 builder.Services.AddMarten(options => {
@@ -29,6 +34,8 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.MapCarter();
+
+app.UseSerilogRequestLogging();
 
 app.UseExceptionHandler();
 
