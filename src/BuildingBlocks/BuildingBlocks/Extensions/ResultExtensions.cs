@@ -18,7 +18,8 @@ public static class ResultExtensions
 				extensions: new Dictionary<string, object?>
 				{
 					{ "errors", new[] { result.Error } }
-				});
+				}
+			);
 		}
 	}
 }

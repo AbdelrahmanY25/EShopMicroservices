@@ -1,9 +1,9 @@
 namespace BuildingBlocks.Behaviors;
 
-public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators) : IPipelineBehavior<TRequest, TResponse>
-	where TRequest : ICommand<TResponse>
+public class ValidationBehavior<TRequest, TResult>(IEnumerable<IValidator<TRequest>> validators) : IPipelineBehavior<TRequest, TResult>
+	where TRequest : notnull, IRequest<TResult>
 {
-	public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+	public async Task<TResult> Handle(TRequest request, RequestHandlerDelegate<TResult> next, CancellationToken cancellationToken)
 	{
 		var context = new ValidationContext<TRequest>(request);
 
@@ -19,19 +19,20 @@ public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TReq
 			var errorDescription = string.Join("; ", failures.Select(f => f.ErrorMessage));
 			var error = Error.Validation(errorDescription);
 
-			// TResponse is Result (non-generic)
-			if (typeof(TResponse) == typeof(Result))
-				return (TResponse)(object)Result.Failure(error);
+			// TResult is Result (non-generic)
+			if (typeof(TResult) == typeof(Result))
+				return (TResult)(object)Result.Failure(error);
 
-			// TResponse is Result<T> — get T and call Result.Failure<T>(error)
-			var resultType = typeof(TResponse);
+			// TResult is Result<T> — get T and call Result.Failure<T>(error)
+			var resultType = typeof(TResult);
+
 			if (resultType.IsGenericType && resultType.GetGenericTypeDefinition() == typeof(Result<>))
 			{
 				var failureMethod = typeof(Result)
 					.GetMethod(nameof(Result.Failure), 1, [typeof(Error)])!
-					.MakeGenericMethod(resultType.GetGenericArguments()[0]);
+					.MakeGenericMethod(resultType.GetGenericArguments());
 
-				return (TResponse)failureMethod.Invoke(null, [error])!;
+				return (TResult)failureMethod.Invoke(null, [error])!;
 			}
 
 			// Fallback for non-Result response types

@@ -11,7 +11,7 @@ public class GetProductByIdEndPoint() : ICarterModule
 			var result = await sender.Send(new GetProductByIdQuery(id));
 
 			if (result.IsFailure)
-				return (IResult)result.ToProblem();
+				return result.ToProblem();
 
 			var response = result.Value.Adapt<GetProductByIdResponse>();
 

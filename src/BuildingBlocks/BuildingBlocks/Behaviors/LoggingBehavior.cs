@@ -1,15 +1,12 @@
-﻿using Microsoft.Extensions.Logging;
-using System.Diagnostics;
+﻿namespace BuildingBlocks.Behaviors;
 
-namespace BuildingBlocks.Behaviors;
-
-public class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavior<TRequest, TResponse>> logger) : 
-	IPipelineBehavior<TRequest, TResponse> where TRequest : notnull, IRequest<TResponse> where TResponse : notnull
+public class LoggingBehavior<TRequest, TResult>(ILogger<LoggingBehavior<TRequest, TResult>> logger) : IPipelineBehavior<TRequest, TResult>
+	where TRequest : notnull, IRequest<TResult> where TResult : notnull
 {
-	public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+	public async Task<TResult> Handle(TRequest request, RequestHandlerDelegate<TResult> next, CancellationToken cancellationToken)
 	{
 		logger.LogInformation("[START] Handle request={Request} - Response={Response} - RequestData={RequestData}",
-			typeof(TRequest).Name, typeof(TResponse).Name, request);
+			typeof(TRequest).Name, typeof(TResult).Name, request);
 
 		var timer = new Stopwatch();
 		timer.Start();
@@ -23,7 +20,7 @@ public class LoggingBehavior<TRequest, TResponse>(ILogger<LoggingBehavior<TReque
 			logger.LogWarning("[PERFORMANCE] The request {Request} took {TimeTaken} seconds.",
 				typeof(TRequest).Name, timeTaken.Seconds);
 
-		logger.LogInformation("[END] Handled {Request} with {Response}", typeof(TRequest).Name, typeof(TResponse).Name);
+		logger.LogInformation("[END] Handled {Request} with {Response}", typeof(TRequest).Name, typeof(TResult).Name);
 		return response;
 	}
 }

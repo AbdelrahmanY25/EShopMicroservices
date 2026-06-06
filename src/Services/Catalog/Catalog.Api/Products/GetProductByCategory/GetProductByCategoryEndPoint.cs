@@ -11,10 +11,10 @@ public class GetProductByCategoryEndPoint : ICarterModule
 			var result = await sender.Send(new GetProductByCategoryQuery(category));
 
 			if (result.IsFailure)
-				return (IResult)result.ToProblem();
+				return result.ToProblem();
 
 			var response = result.Value.Adapt<GetProductByCategoryResponse>();
-
+			
 			return Results.Ok(response);
 		})
 		.WithName("GetProductsByCategory")

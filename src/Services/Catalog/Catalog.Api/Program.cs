@@ -1,11 +1,12 @@
 using BuildingBlocks.Exceptions;
 using Serilog;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-var assemply = typeof(Program).Assembly;
+var assemply = Assembly.GetExecutingAssembly();
 
 builder.Services.AddMediatR(cfg => 
 {

@@ -11,7 +11,7 @@ public class DeleteProductEndPoint : ICarterModule
 			var result = await sender.Send(new DeleteProductCommand(id));
 
 			if (result.IsFailure)
-				return (IResult)result.ToProblem();
+				return result.ToProblem();
 
 			var response = result.Value.Adapt<DeleteProductResponse>();
 

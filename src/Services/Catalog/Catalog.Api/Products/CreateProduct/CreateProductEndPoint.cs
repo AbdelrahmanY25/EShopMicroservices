@@ -14,7 +14,7 @@ public class CreateProductEndPoint : ICarterModule
 			var result = await sender.Send(command);
 
 			if (result.IsFailure)
-				return (IResult)result.ToProblem();
+				return result.ToProblem();
 
 			var response = result.Value.Adapt<CreateProductResponse>();
 
