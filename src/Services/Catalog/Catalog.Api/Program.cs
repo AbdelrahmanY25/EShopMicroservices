@@ -3,6 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 var assemply = Assembly.GetExecutingAssembly();
+var connectionString = builder.Configuration.GetConnectionString("Database")!;
 
 builder.Services.AddMediatR(cfg => 
 {
@@ -21,7 +22,7 @@ builder.Services.AddCarter();
 
 builder.Services.AddMarten(options =>
 {
-	options.Connection(builder.Configuration.GetConnectionString("Database")!);
+	options.Connection(connectionString);
 })
 .UseLightweightSessions();
 
@@ -29,7 +30,11 @@ if (builder.Environment.IsDevelopment())
 	builder.Services.InitializeMartenWith<CatalogInitialData>();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
 builder.Services.AddProblemDetails();
+
+builder.Services.AddHealthChecks()
+	.AddNpgSql(connectionString);
 
 var app = builder.Build();
 
@@ -39,5 +44,10 @@ app.MapCarter();
 app.UseSerilogRequestLogging();
 
 app.UseExceptionHandler();
+
+app.MapHealthChecks("/health", new HealthCheckOptions 
+	{ 
+		ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+	});
 
 app.Run();

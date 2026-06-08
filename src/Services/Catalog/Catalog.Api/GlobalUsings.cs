@@ -23,4 +23,8 @@ global using Marten.Pagination;
 global using MediatR;
 global using FluentValidation;
 global using Serilog;
+global using HealthChecks.UI.Client;
 
+
+
+global using Microsoft.AspNetCore.Diagnostics.HealthChecks;
