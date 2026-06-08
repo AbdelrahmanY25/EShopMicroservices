@@ -11,14 +11,15 @@ global using BuildingBlocks.Extensions;
 
 
 global using Catalog.Api.Data;
-global using Catalog.Api.Errors;
 global using Catalog.Api.Models;
+global using Catalog.Api.Errors;
 
 
 
 global using Carter;
 global using Mapster;
 global using Marten;
+global using Marten.Pagination;
 global using MediatR;
 global using FluentValidation;
 global using Serilog;
