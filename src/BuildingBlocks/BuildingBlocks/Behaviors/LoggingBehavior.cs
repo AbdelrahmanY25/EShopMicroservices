@@ -1,7 +1,7 @@
 ﻿namespace BuildingBlocks.Behaviors;
 
 public class LoggingBehavior<TRequest, TResult>(ILogger<LoggingBehavior<TRequest, TResult>> logger) : IPipelineBehavior<TRequest, TResult>
-	where TRequest : notnull, IRequest<TResult> where TResult : notnull
+	where TRequest : notnull, IRequest<TResult>
 {
 	public async Task<TResult> Handle(TRequest request, RequestHandlerDelegate<TResult> next, CancellationToken cancellationToken)
 	{

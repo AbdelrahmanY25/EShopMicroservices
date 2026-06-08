@@ -24,5 +24,6 @@ public class Result
 
 public class Result<TValue>(TValue value, bool isSuccess, Error error) : Result(isSuccess, error)
 {
-	public TValue Value => IsSuccess ? value : throw new InvalidOperationException("Failure result can't have value.");
+	public TValue Value => IsSuccess ? value :
+		throw new InvalidOperationException("Failure result can't have value.");
 }

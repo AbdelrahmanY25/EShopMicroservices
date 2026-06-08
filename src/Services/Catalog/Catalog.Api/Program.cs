@@ -1,7 +1,3 @@
-using BuildingBlocks.Exceptions;
-using Serilog;
-using System.Reflection;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -23,10 +19,14 @@ builder.Host.UseSerilog((context, configuration) =>
 
 builder.Services.AddCarter();
 
-builder.Services.AddMarten(options => {
+builder.Services.AddMarten(options =>
+{
 	options.Connection(builder.Configuration.GetConnectionString("Database")!);
 })
 .UseLightweightSessions();
+
+if (builder.Environment.IsDevelopment())
+	builder.Services.InitializeMartenWith<CatalogInitialData>();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
