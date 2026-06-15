@@ -1,9 +1,10 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 var assemply = Assembly.GetExecutingAssembly();
+
 var connectionString = builder.Configuration.GetConnectionString("Database")!;
+
+// Add services to the container.
 
 builder.Services.AddMediatR(cfg => 
 {
@@ -26,8 +27,8 @@ builder.Services.AddMarten(options =>
 })
 .UseLightweightSessions();
 
-if (builder.Environment.IsDevelopment())
-	builder.Services.InitializeMartenWith<CatalogInitialData>();
+//if (builder.Environment.IsDevelopment())
+//	builder.Services.InitializeMartenWith<CatalogInitialData>();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
