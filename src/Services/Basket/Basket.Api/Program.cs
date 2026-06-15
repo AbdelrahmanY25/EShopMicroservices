@@ -1,8 +1,8 @@
-using BuildingBlocks.Exceptions;
-
 var builder = WebApplication.CreateBuilder(args);
 
 var assemply = Assembly.GetExecutingAssembly();
+
+var connectionString = builder.Configuration.GetConnectionString("Database")!;
 
 // Add services to the container.
 
@@ -20,6 +20,15 @@ builder.Services.AddValidatorsFromAssembly(assemply);
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddProblemDetails();
+
+builder.Services.AddMarten(options =>
+{
+	options.Connection(connectionString);
+	options.Schema.For<ShoppingCart>().Identity(x => x.UserName);
+})
+.UseLightweightSessions();
+
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 
 // Configure the HTTP request pipeline.
 
