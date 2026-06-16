@@ -35,11 +35,16 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddHealthChecks()
-	.AddNpgSql(connectionString);
+	.AddNpgSql(connectionString, name: "PostgreSQL");
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+app.UseHsts();
+
+app.UseHttpsRedirection();
+
 app.MapCarter();
 
 app.UseSerilogRequestLogging();

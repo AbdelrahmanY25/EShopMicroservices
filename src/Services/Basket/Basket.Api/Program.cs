@@ -42,9 +42,13 @@ builder.Services.AddHealthChecks()
 	.AddNpgSql(connectionString, name: "PostgreSQL")
 	.AddRedis(RedisConnectionString, name: "Redis");
 
+var app = builder.Build();
+
 // Configure the HTTP request pipeline.
 
-var app = builder.Build();
+app.UseHsts();
+
+app.UseHttpsRedirection();
 
 app.MapCarter();
 
