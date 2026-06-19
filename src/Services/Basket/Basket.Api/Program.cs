@@ -1,3 +1,5 @@
+using Discount.Grpc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var assemply = Assembly.GetExecutingAssembly();
@@ -41,6 +43,21 @@ builder.Services.AddStackExchangeRedisCache(options =>
 builder.Services.AddHealthChecks()
 	.AddNpgSql(connectionString, name: "PostgreSQL")
 	.AddRedis(RedisConnectionString, name: "Redis");
+
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+	options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+})
+.ConfigurePrimaryHttpMessageHandler(() =>
+{
+	var handler = new HttpClientHandler
+	{
+		ServerCertificateCustomValidationCallback =
+		HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+	};
+
+	return handler;
+});
 
 var app = builder.Build();
 
