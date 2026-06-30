@@ -8,7 +8,7 @@ public abstract class Aggregate<TId> : Entity<TId>, IAggregate<TId>
 
     public void AddDomainEvent(IDomainEvent domainEvent)
 	{
-		_domainEvents.Add(domainEvent);
+		_domainEvents.Add(domainEvent); 
 	}
 
 	public IDomainEvent[] ClearDomainEvents()
