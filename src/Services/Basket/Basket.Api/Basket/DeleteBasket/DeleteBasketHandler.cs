@@ -18,7 +18,7 @@ public class DeleteBasketCommandHandler(IBasketRepository basketRepository) : IC
 
 	public async Task<Result<DeleteBasketResult>> Handle(DeleteBasketCommand request, CancellationToken cancellationToken)
 	{
-		var isDeleted = await _basketRepository.DeleteBasketAsync(request.UserName);
+		var isDeleted = await _basketRepository.DeleteBasketAsync(request.UserName, cancellationToken);
 
 		if (!isDeleted)
 			return Result.Failure<DeleteBasketResult>(BasketErrors.NotFound);

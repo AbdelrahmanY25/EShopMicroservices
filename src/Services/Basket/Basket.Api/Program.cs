@@ -1,12 +1,10 @@
-using Discount.Grpc;
-
 var builder = WebApplication.CreateBuilder(args);
 
 var assemply = Assembly.GetExecutingAssembly();
 
 var connectionString = builder.Configuration.GetConnectionString("Database")!;
 
-var RedisConnectionString = builder.Configuration.GetConnectionString("Redis")!;
+var redisConnectionString = builder.Configuration.GetConnectionString("Redis")!;
 
 // Add services to the container.
 
@@ -37,12 +35,12 @@ builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
-	options.Configuration = builder.Configuration.GetConnectionString("Redis");
+	options.Configuration = redisConnectionString;
 });
 
 builder.Services.AddHealthChecks()
 	.AddNpgSql(connectionString, name: "PostgreSQL")
-	.AddRedis(RedisConnectionString, name: "Redis");
+	.AddRedis(redisConnectionString, name: "Redis");
 
 builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
 {

@@ -12,7 +12,7 @@ public class DiscountService(AppDbContext dbContext, ILogger<DiscountService> lo
 
 		coupon ??= new Coupon { ProductName = "No Discount", Amount = 0, Description = "No Discount Desc" };
 
-		_logger.LogInformation("Discount is retrieved for ProductName : {productName}, Amount : {amount}", coupon.ProductName, coupon.Amount);
+		_logger.LogInformation("Discount for ProductName : {productName}, Amount : {amount}", coupon.ProductName, coupon.Amount);
 
 		var couponModel = coupon.Adapt<CouponModel>();
 
