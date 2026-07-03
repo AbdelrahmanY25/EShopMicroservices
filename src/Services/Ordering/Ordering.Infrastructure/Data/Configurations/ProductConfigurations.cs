@@ -6,6 +6,8 @@ public class ProductConfigurations : IEntityTypeConfiguration<Product>
 	{
 		builder.HasKey(p => p.Id);
 
+		builder.ToTable("Products", "oms");
+
 		builder.Property(p => p.Id)
 		       .HasConversion(
 					productId => productId.Value,

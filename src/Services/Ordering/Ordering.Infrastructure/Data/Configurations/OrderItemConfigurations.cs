@@ -6,6 +6,8 @@ public class OrderItemConfigurations : IEntityTypeConfiguration<OrderItem>
 	{
 		builder.HasKey(oi => oi.Id);
 
+		builder.ToTable("OrderItems", "oms");
+
 		builder.Property(oi => oi.Id)
 			   .HasConversion(
 			   		orderItemId => orderItemId.Value,

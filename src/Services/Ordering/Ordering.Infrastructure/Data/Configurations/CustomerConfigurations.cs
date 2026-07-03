@@ -6,6 +6,8 @@ public class CustomerConfigurations : IEntityTypeConfiguration<Customer>
 	{
 		builder.HasKey(c => c.Id);
 
+		builder.ToTable("Customers", "oms");
+
 		builder.Property(c => c.Id)
 			   .HasConversion(
 			   		customerId => customerId.Value,
