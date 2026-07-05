@@ -6,6 +6,8 @@ public static class DependencyInjection
 	{
 		public IServiceCollection AddApplicationServices()
 		{
+			services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
 			return services;
 		}
 	}
