@@ -6,7 +6,12 @@ public static class DependencyInjection
 	{
 		public IServiceCollection AddApplicationServices()
 		{
-			services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+			services.AddMediatR(config => 
+			{
+				config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+				config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+				config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+			});
 
 			return services;
 		}
