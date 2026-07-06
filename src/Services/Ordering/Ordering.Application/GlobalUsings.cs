@@ -11,6 +11,7 @@ global using BuildingBlocks.Abstractions;
 global using Ordering.Application.DTOs;
 global using Ordering.Application.Data;
 global using Ordering.Application.Errors;
+global using Ordering.Application.Extensions;
 
 
 
@@ -22,6 +23,7 @@ global using Ordering.Domain.ValueObjects;
 
 
 
+global using Mapster;
 global using MediatR;
 global using FluentValidation;
 
