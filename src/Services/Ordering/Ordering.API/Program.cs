@@ -16,4 +16,6 @@ var app = builder.Build();
 //	await app.InitialiseDatabaseAsync();
 //}
 
+app.MapCarter();
+
 app.Run();
