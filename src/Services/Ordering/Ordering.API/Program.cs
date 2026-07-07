@@ -3,7 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services
-	.AddApiServices()
+	.AddApiServices(builder.Configuration)
 	.AddApplicationServices()
 	.AddInfrastructureServices(builder.Configuration);
 
@@ -19,5 +19,10 @@ var app = builder.Build();
 app.MapCarter();
 
 app.UseExceptionHandler();
+
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+	ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.Run();
