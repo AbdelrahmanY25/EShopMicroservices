@@ -11,8 +11,12 @@ namespace Ordering.Infrastructure.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "oms");
+
             migrationBuilder.CreateTable(
                 name: "Customers",
+                schema: "oms",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -30,6 +34,7 @@ namespace Ordering.Infrastructure.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Products",
+                schema: "oms",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -47,6 +52,7 @@ namespace Ordering.Infrastructure.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Orders",
+                schema: "oms",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -84,6 +90,7 @@ namespace Ordering.Infrastructure.Data.Migrations
                     table.ForeignKey(
                         name: "FK_Orders_Customers_CustomerId",
                         column: x => x.CustomerId,
+                        principalSchema: "oms",
                         principalTable: "Customers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -91,6 +98,7 @@ namespace Ordering.Infrastructure.Data.Migrations
 
             migrationBuilder.CreateTable(
                 name: "OrderItems",
+                schema: "oms",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -109,12 +117,14 @@ namespace Ordering.Infrastructure.Data.Migrations
                     table.ForeignKey(
                         name: "FK_OrderItems_Orders_OrderId",
                         column: x => x.OrderId,
+                        principalSchema: "oms",
                         principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderItems_Products_ProductId",
                         column: x => x.ProductId,
+                        principalSchema: "oms",
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -122,22 +132,26 @@ namespace Ordering.Infrastructure.Data.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Customers_Email",
+                schema: "oms",
                 table: "Customers",
                 column: "Email",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_OrderId",
+                schema: "oms",
                 table: "OrderItems",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderItems_ProductId",
+                schema: "oms",
                 table: "OrderItems",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
+                schema: "oms",
                 table: "Orders",
                 column: "CustomerId");
         }
@@ -146,16 +160,20 @@ namespace Ordering.Infrastructure.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "OrderItems");
+                name: "OrderItems",
+                schema: "oms");
 
             migrationBuilder.DropTable(
-                name: "Orders");
+                name: "Orders",
+                schema: "oms");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Products",
+                schema: "oms");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "Customers",
+                schema: "oms");
         }
     }
 }
