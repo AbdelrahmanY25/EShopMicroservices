@@ -1,5 +1,6 @@
 ﻿global using BuildingBlocks.Extensions;
 global using BuildingBlocks.Pagination;
+global using BuildingBlocks.Exceptions;
 
 
 

@@ -8,6 +8,10 @@ public static class DependencyInjection
 		{
 			services.AddCarter();
 
+			services.AddExceptionHandler<GlobalExceptionHandler>();
+			
+			services.AddProblemDetails();
+
 			return services;
 		}
 	}
