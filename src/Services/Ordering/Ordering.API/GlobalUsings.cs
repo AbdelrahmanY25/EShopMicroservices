@@ -20,6 +20,7 @@ global using Ordering.Application.Orders.Queries.GetOrdersByCustomer;
 
 
 global using Ordering.Infrastructure;
+global using Ordering.Infrastructure.Data.Extensions;
 
 
 

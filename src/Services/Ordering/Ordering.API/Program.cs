@@ -11,10 +11,10 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-//if (app.Environment.IsDevelopment())
-//{
-//	await app.InitialiseDatabaseAsync();
-//}
+if (app.Environment.IsDevelopment())
+{
+	await app.InitialiseDatabaseAsync();
+}
 
 app.MapCarter();
 

@@ -8,7 +8,7 @@ public static class DependencyInjection
 		{
 			var connectionString = configuration.GetConnectionString("Database");
 
-			services.AddScoped<IAppDbContext,  AppDbContext>();
+			services.AddScoped<IAppDbContext, AppDbContext>();
 
 			services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
 
