@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.RateLimiting;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,9 +7,22 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddReverseProxy()
 	.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
+
+builder.Services.AddRateLimiter(options =>
+{
+	options.AddFixedWindowLimiter("fixed", opt =>
+	{
+		opt.Window = TimeSpan.FromSeconds(10);
+		opt.QueueLimit = 5;
+	});
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+app.UseRateLimiter();
+
 app.MapReverseProxy();
 
 app.Run();
