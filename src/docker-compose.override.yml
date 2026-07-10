@@ -96,8 +96,8 @@ services:
           - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
           - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
-    order.api:
-      container_name: order.api
+    ordering.api:
+      container_name: ordering.api
       environment:
           - ASPNETCORE_ENVIRONMENT=Development
           - ASPNETCORE_HTTP_PORTS=8080
