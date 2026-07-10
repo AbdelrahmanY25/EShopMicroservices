@@ -8,12 +8,12 @@ builder.Services.AddReverseProxy()
 	.LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
 
 
-builder.Services.AddRateLimiter(options =>
+builder.Services.AddRateLimiter(rateLimiterOptions =>
 {
-	options.AddFixedWindowLimiter("fixed", opt =>
+	rateLimiterOptions.AddFixedWindowLimiter("fixed", options =>
 	{
-		opt.Window = TimeSpan.FromSeconds(10);
-		opt.QueueLimit = 5;
+		options.Window = TimeSpan.FromSeconds(10);
+		options.PermitLimit = 5;
 	});
 });
 

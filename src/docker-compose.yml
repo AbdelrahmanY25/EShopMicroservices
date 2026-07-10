@@ -37,7 +37,24 @@ services:
       context: .
       dockerfile: Services/Ordering/Ordering.Api/Dockerfile
 
+  yarpapigateway:
+    image: ${DOCKER_REGISTRY-}yarpapigateway
+    build:
+      context: .
+      dockerfile: ApiGateways/YarpApiGateway/Dockerfile
+
 volumes:
   postgres_catalog:
-  postgres_basket:  
-
+  postgres_basket:
+  
+networks:
+    service-network:
+      driver: bridge
+    catalog-postgres-network:
+      driver: bridge
+    basket-postgres-network:
+      driver: bridge
+    basket-redis-network:
+      driver: bridge
+    order-mssql-network:
+      driver: bridge
