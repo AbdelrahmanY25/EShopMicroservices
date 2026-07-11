@@ -17,11 +17,18 @@ builder.Services.AddRateLimiter(rateLimiterOptions =>
 	});
 });
 
+builder.Services.AddOutputCache(options =>
+{
+	options.AddPolicy("customPolicy", builder => builder.Expire(TimeSpan.FromSeconds(20)));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
 app.UseRateLimiter();
+
+app.UseOutputCache();
 
 app.MapReverseProxy();
 
