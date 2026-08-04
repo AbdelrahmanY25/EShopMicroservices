@@ -13,6 +13,8 @@ public static class DependencyInjection
 				config.AddOpenBehavior(typeof(ValidationBehavior<,>));
 			});
 
+			services.AddFeatureManagement();
+
 			services.AddMessageBroker(configuration, Assembly.GetExecutingAssembly());
 
 			return services;
