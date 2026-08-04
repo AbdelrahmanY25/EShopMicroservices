@@ -4,7 +4,7 @@ public static class DependencyInjection
 {
 	extension(IServiceCollection services)
 	{
-		public IServiceCollection AddApplicationServices()
+		public IServiceCollection AddApplicationServices(IConfiguration configuration)
 		{
 			services.AddMediatR(config => 
 			{
@@ -12,6 +12,8 @@ public static class DependencyInjection
 				config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 				config.AddOpenBehavior(typeof(ValidationBehavior<,>));
 			});
+
+			services.AddMessageBroker(configuration, Assembly.GetExecutingAssembly());
 
 			return services;
 		}

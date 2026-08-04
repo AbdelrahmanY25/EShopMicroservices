@@ -8,8 +8,8 @@ global using BuildingBlocks.Behaviors;
 global using BuildingBlocks.Exceptions;
 global using BuildingBlocks.Extensions;
 global using BuildingBlocks.Abstractions;
+global using BuildingBlocks.Messaging.Events;
 global using BuildingBlocks.Messaging.MassTransit;
-
 
 
 global using Basket.Api.Data;
@@ -23,6 +23,7 @@ global using Carter;
 global using Marten;
 global using Mapster;
 global using MediatR;
+global using MassTransit;
 global using Discount.Grpc;
 global using FluentValidation;
 global using HealthChecks.UI.Client;

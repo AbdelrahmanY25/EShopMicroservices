@@ -1,7 +1,4 @@
-﻿using BuildingBlocks.Messaging.Events;
-using MassTransit;
-
-namespace Basket.Api.Basket.CheckoutBasket;
+﻿namespace Basket.Api.Basket.CheckoutBasket;
 
 public record CheckoutBasketCommand(CheckoutBasketDto CheckoutBasketDto) : ICommand<CheckoutBasketResult>;
 

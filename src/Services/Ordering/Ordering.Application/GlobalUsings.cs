@@ -6,6 +6,7 @@ global using BuildingBlocks.CQRS;
 global using BuildingBlocks.Behaviors;
 global using BuildingBlocks.Pagination;
 global using BuildingBlocks.Abstractions;
+global using BuildingBlocks.Messaging.MassTransit;
 
 
 
@@ -33,4 +34,5 @@ global using FluentValidation;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.Extensions.Logging;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
